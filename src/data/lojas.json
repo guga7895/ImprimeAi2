@@ -1,0 +1,12 @@
+[
+    {
+      "id": 1,
+      "nome": "Loja A",
+      "endereco": "Av. Paulista, 123"
+    },
+    {
+      "id": 2,
+      "nome": "Loja B",
+      "endereco": "Av. Rebouças, 456"
+    }
+  ]
