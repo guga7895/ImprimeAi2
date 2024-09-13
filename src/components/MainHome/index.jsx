@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Button, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Button, FlatList, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import lojas from '../../data/lojas.json'; // Adjust the import path as needed
+import { useNavigation } from '@react-navigation/native';
+import lojas from '../../data/lojas.json'; 
+
 
 const Main = () => {
   const [text, setText] = useState('');
   const [filteredStores, setFilteredStores] = useState([]);
 
   const ApertarBotão = () => {
-    // Filter the paper stores based on user input
     const results = lojas.filter(store =>
       store.nome && store.nome.toLowerCase().includes(text.toLowerCase())
     );
     setFilteredStores(results);
   };
+
+  const navigation = useNavigation();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -33,15 +36,23 @@ const Main = () => {
                 data={filteredStores}
                 keyExtractor={item => item.id.toString()}
                 renderItem={({ item }) => (
-                <View style={styles.storeItem}>
-                    <Text style={styles.storeName}>{item.nome}</Text>
-                    <Text style={styles.storeAddress}>{item.endereco}</Text>
-                </View>
+                    <TouchableOpacity onPress={() => {
+                            console.log('Indo para a loja', item);
+                            navigation.navigate('Loja', { store: item })
+                    }}>
+                        <View style={styles.storeItem}>
+                            <Text style={styles.storeName}>{item.nome}</Text>
+                            <Text style={styles.storeAddress}>{item.endereco}</Text>
+                        </View>
+                    </TouchableOpacity>
                 )}
                 ListEmptyComponent={() => (
-                <Text style={styles.emptyListText}>Nenhuma loja encontrada</Text>
+                    <Text style={styles.emptyListText}>Nenhuma loja encontrada</Text>
                 )}
             />
+        </View>
+        <View style={styles.buttonVoltarContainer}>
+            <Button style={styles.buttonVoltar} title="Voltar" onPress={() => navigation.goBack()} />
         </View>
     </SafeAreaView>
   );
@@ -55,6 +66,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         width: '100%',
     },
+    buttonVoltarContainer: {
+        width: '50%',
+        marginTop: 16,
+    },
     buttonContainer: {
         width: '50%',
         marginBottom: 16,
@@ -66,11 +81,11 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
     flatListBackground: {
-        height: 400, // Fixed height for the FlatList
+        height: 400, 
         width: '100%',
-        backgroundColor: '#f0f0f0', // Light gray background
+        backgroundColor: '#f0f0f0', 
         padding: 10,
-        borderRadius: 10, // Rounded corners
+        borderRadius: 10, 
     },
     storeItem: {
         padding: 10,

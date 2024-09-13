@@ -1,10 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import Header from './src/components/MyHeader';
-import Main from './src/components/Main'
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {StyleSheet} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './src/pages/Home';
+import Loja from './src/pages/Loja';  
 import { NavigationContainer } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
