@@ -1,10 +1,10 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, Button } from "react-native";
 import { Picker } from '@react-native-picker/picker'; 
 import * as DocumentPicker from 'expo-document-picker';
 import BackButton from '../BackButton/index';
-import defaultImage from '../../data/StoreImgs/defaultImage.jpg';
+import defaultImage from '../../data/StoreImgs/defaultImage.png';
 import opcoesPapel from '../../data/opcoesPapel.json'; 
 import opcoesImpressao from '../../data/opcoesImpressao.json'; 
 
@@ -78,6 +78,9 @@ const BodyPrint = () => {
                     ))}
                 </Picker>
             </View>
+            <View style={styles.buttonNext}>
+                <Button color="green" title="Avançar"/>
+            </View>
             <BackButton />
         </SafeAreaView>
     );
@@ -93,9 +96,9 @@ const styles = StyleSheet.create({
     uploadButton: {
         backgroundColor: '#007bff',
         padding: 10,
-        marginTop: 50,
+        marginTop: 10,
         borderRadius: 5,
-        marginBottom: 20,
+        marginBottom: 30,
     },
     uploadButtonText: {
         color: '#fff',
@@ -108,8 +111,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     previewImageContainer: {
-        width: '80%',
-        height: 300,
+        width: '60%',
+        height: 250,
         borderWidth: 1,
         borderColor: '#ccc',
         justifyContent: 'center',
@@ -127,11 +130,15 @@ const styles = StyleSheet.create({
     quantityContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 20,
+        marginTop: 4,
+        backgroundColor: '#fff', 
+        borderRadius: 10, 
+        padding: 10, 
+        shadowColor: '#000',
     },
     quantityButton: {
         backgroundColor: '#007bff',
-        padding: 10,
+        padding: 7,
         borderRadius: 5,
         marginHorizontal: 10,
     },
@@ -148,8 +155,11 @@ const styles = StyleSheet.create({
     },
     pickerContainer: {
         flexDirection:'row',
-        marginTop: 5,
-        
+        marginTop: 6,
+        backgroundColor: '#fff', 
+        borderRadius: 10, 
+        paddingHorizontal: 5, 
+        shadowColor: '#000',
         alignItems: 'center',
     },
     pickerLabel: {
@@ -160,6 +170,11 @@ const styles = StyleSheet.create({
         width: '50%',
 
     },
+    buttonNext:{
+        marginTop: 30,
+        marginBottom:28,
+        width: '50%',
+    }
 });
 
 export default BodyPrint;
