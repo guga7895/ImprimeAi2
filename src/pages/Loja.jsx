@@ -1,15 +1,17 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import Header from '../components/HeaderHome';
-import Main from '../components/MainHome';
+import { View, StyleSheet,Text } from 'react-native';
+import Header from '../components/Header';
+import BodyStore from '../components/BodyStore';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-const Home = () => {
+const Loja = ({route}) => {
+  const { loja } = route.params;
+
   return (
     <SafeAreaProvider>
         <View style={styles.container}>
-        <Header />
-        <Main />
+          <Header lojaNome={loja.nome}/>
+          <BodyStore loja={loja}/>
         </View>
     </SafeAreaProvider>
   );
@@ -21,4 +23,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Loja;

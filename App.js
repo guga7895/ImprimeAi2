@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './src/pages/Home';
 import Loja from './src/pages/Loja';  
+import Impressao from './src/pages/Impressao';  
 import { NavigationContainer } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
@@ -12,6 +13,7 @@ export default function App() {
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen name="Loja" component={Loja}/>
+        <Stack.Screen name="Impressao" component={Impressao}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

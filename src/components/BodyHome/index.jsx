@@ -10,8 +10,8 @@ const Main = () => {
   const [filteredStores, setFilteredStores] = useState([]);
 
   const ApertarBotão = () => {
-    const results = lojas.filter(store =>
-      store.nome && store.nome.toLowerCase().includes(text.toLowerCase())
+    const results = lojas.filter(loja =>
+      loja.nome && loja.nome.toLowerCase().includes(text.toLowerCase())
     );
     setFilteredStores(results);
   };
@@ -38,7 +38,7 @@ const Main = () => {
                 renderItem={({ item }) => (
                     <TouchableOpacity onPress={() => {
                             console.log('Indo para a loja', item);
-                            navigation.navigate('Loja', { store: item })
+                            navigation.navigate('Loja', { loja: item })
                     }}>
                         <View style={styles.storeItem}>
                             <Text style={styles.storeName}>{item.nome}</Text>
@@ -51,9 +51,6 @@ const Main = () => {
                 )}
             />
         </View>
-        <View style={styles.buttonVoltarContainer}>
-            <Button style={styles.buttonVoltar} title="Voltar" onPress={() => navigation.goBack()} />
-        </View>
     </SafeAreaView>
   );
 };
@@ -65,10 +62,6 @@ const styles = StyleSheet.create({
         padding: 16,
         backgroundColor: '#fff',
         width: '100%',
-    },
-    buttonVoltarContainer: {
-        width: '50%',
-        marginTop: 16,
     },
     buttonContainer: {
         width: '50%',
