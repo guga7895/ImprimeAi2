@@ -7,8 +7,10 @@ import BackButton from '../BackButton/index';
 import defaultImage from '../../data/StoreImgs/defaultImage.png';
 import opcoesPapel from '../../data/opcoesPapel.json'; 
 import opcoesImpressao from '../../data/opcoesImpressao.json'; 
+import { useNavigation } from '@react-navigation/native';
 
-const BodyPrint = () => {
+const BodyPrint = ({loja}) => {
+    const navigation = useNavigation();
     const [document, setDocument] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [selectedOption, setSelectedOption] = useState(opcoesPapel[0].value);
@@ -79,7 +81,7 @@ const BodyPrint = () => {
                 </Picker>
             </View>
             <View style={styles.buttonNext}>
-                <Button color="green" title="Avançar"/>
+                <Button color="green" title="Avançar" onPress={() => navigation.navigate('Entrega',{loja})}/>
             </View>
             <BackButton />
         </SafeAreaView>

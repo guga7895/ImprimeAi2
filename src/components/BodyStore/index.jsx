@@ -16,7 +16,7 @@ const BodyStore = ({loja}) => {
       </View>
       <Text style={styles.rating}>O rating desta loja é: {loja.rating}/10</Text>
       <View style={styles.impressaoSolicitar}>
-        <Button title="Solicitar impressão" onPress={() => navigation.navigate('Impressao',{loja:loja})}/>
+        <Button title="Solicitar impressão" onPress={() => navigation.navigate('Impressao',{loja})}/>
       </View> 
       <View style={styles.botaoVoltar}>
         <BackButton/>

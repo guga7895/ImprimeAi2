@@ -4,6 +4,10 @@ import Home from './src/pages/Home';
 import Loja from './src/pages/Loja';  
 import Impressao from './src/pages/Impressao';  
 import { NavigationContainer } from '@react-navigation/native';
+import Entrega from './src/pages/Entrega';
+import Delivery from './src/pages/Delivery';
+import NotDelivery from './src/pages/NotDelivery';
+import WebUberView from './src/pages/WebUberView';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +18,10 @@ export default function App() {
         <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen name="Loja" component={Loja}/>
         <Stack.Screen name="Impressao" component={Impressao}/>
+        <Stack.Screen name="Entrega" component={Entrega}/>
+        <Stack.Screen name="Delivery" component={Delivery}/>
+        <Stack.Screen name="Not Delivery" component={NotDelivery}/>
+        <Stack.Screen name="WebUberView" component={WebUberView}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
