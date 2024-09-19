@@ -9,7 +9,7 @@ import opcoesPapel from '../../data/opcoesPapel.json';
 import opcoesImpressao from '../../data/opcoesImpressao.json'; 
 import { useNavigation } from '@react-navigation/native';
 
-const BodyPrint = ({loja}) => {
+const BodyPrint = ({loja,user}) => {
     const navigation = useNavigation();
     const [document, setDocument] = useState(null);
     const [quantity, setQuantity] = useState(1);
@@ -24,6 +24,7 @@ const BodyPrint = ({loja}) => {
 
     const decrementQuantity = () => {
         if (quantity > 0) {
+            console.log(user);
             setQuantity(quantity - 1);
         }
     };
@@ -81,7 +82,7 @@ const BodyPrint = ({loja}) => {
                 </Picker>
             </View>
             <View style={styles.buttonNext}>
-                <Button color="green" title="Avançar" onPress={() => navigation.navigate('Entrega',{loja})}/>
+                <Button color="green" title="Avançar" onPress={() => navigation.navigate('Entrega',{loja,quantity,user})}/>
             </View>
             <BackButton />
         </SafeAreaView>

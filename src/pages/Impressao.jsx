@@ -6,12 +6,12 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import BodyPrint from '../components/BodyPrint';
 
 const Impressao = ({route}) => {
-    const { loja } = route.params;
+    const { loja, user } = route.params;
     return (
         <SafeAreaProvider>
             <View style={styles.container}>
-                <Header lojaNome={loja.nome}/>
-                <BodyPrint loja={loja}/>
+                <Header lojaNome={loja.nome} user={user}/>
+                <BodyPrint loja={loja} user={user}/>
             </View>
         </SafeAreaProvider>
     );

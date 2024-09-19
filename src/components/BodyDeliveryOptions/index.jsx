@@ -1,14 +1,67 @@
-import React, { useState } from 'react';
-import { Image, View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Image, View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import BackButton from '../BackButton/index';
 import { WebView } from 'react-native-webview';
+import * as FileSystem from 'expo-file-system';
 
-const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco }) => {
+const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, data }) => {
   const navigation = useNavigation();
   const [trackingUrl, setTrackingUrl] = useState('');
+  const [jsonData, setJsonData] = useState([]); // Add jsonData state variable
 
+  const filePath = FileSystem.documentDirectory + 'requests.json';
+
+  const readJsonFile = async () => {
+    try {
+      const fileInfo = await FileSystem.getInfoAsync(filePath);
+      if (!fileInfo.exists) {
+        return [];
+      }
+      const data = await FileSystem.readAsStringAsync(filePath);
+      return JSON.parse(data);
+    } catch (err) {
+      console.error('Error reading JSON file:', err);
+      return [];
+    }
+  };
+
+  const writeJsonFile = async (data) => {
+    try {
+      await FileSystem.writeAsStringAsync(filePath, JSON.stringify(data, null, 2));
+      console.log('JSON file updated successfully.');
+    } catch (err) {
+      console.error('Error writing JSON file:', err);
+    }
+  };
+
+  const addData = async (loja, opcaoEntrega, endereco, user, data) => {
+    console.log('addData - loja:', loja); // Debugging log
+
+    // Step 1: Read the existing data
+    const jsonData = await readJsonFile();
+
+    // Step 2: Determine the new ID
+    const newId = jsonData.length + 1;
+
+    // Step 3: Create the new item
+    const newItem = [
+      { "label": "ID", "value": newId.toString() },
+      { "label": "Loja", "value": loja.nome },
+      { "label": "Quantidade", "value": quantity },
+      { "label": "Email", "value": user.email },
+      { "label": "Data", "value": data }
+    ];
+
+    // Step 4: Push new data to the array
+    jsonData.push(newItem);
+
+    // Step 5: Write the updated data back to the file
+    await writeJsonFile(jsonData);
+
+    setJsonData(jsonData);
+  };
 
   const getOAuthToken = async () => {
     try {
@@ -152,6 +205,8 @@ const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco }) => {
   };
 
   const handleUberPress = async () => {
+    console.log('handleUberPress - loja:', loja); // Debugging log
+    await addData(loja, opcaoEntrega, endereco, user, data); // Pass the appropriate parameters
     const token = await getOAuthToken();
     if (token) {
       const quoteId = await createQuote(token);
@@ -165,18 +220,40 @@ const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco }) => {
     if (trackingUrl) {
       navigation.navigate('WebUberView', { url: trackingUrl });
     } else {
-      Alert.alert('Error', 'No tracking URL available');
+      Alert.alert('Error', 'Você ainda não criou um pedido!');
     }
   };
 
+  const loadJsonData = async () => {
+    const data = await readJsonFile();
+    setJsonData(data);
+  };
+
+  // Load JSON data when the component mounts
+  useEffect(() => {
+    loadJsonData();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
+      <Text>Solicite sua entrega: </Text>
       <TouchableOpacity onPress={handleUberPress} style={styles.uberButton}>
         <Image source={require('../../data/StoreImgs/uberLogo.png')} style={styles.uberLogo} />
       </TouchableOpacity>
       <TouchableOpacity onPress={handleTrackDelivery} style={styles.trackButton}>
-        <Text style={styles.trackButtonText}>Track Delivery</Text>
+        <Text style={styles.trackButtonText}>Acompanhar seu pedido:</Text>
       </TouchableOpacity>
+      <ScrollView style={styles.jsonContainer}>
+        {jsonData.map((item, index) => (
+          <View key={index} style={styles.jsonItem}>
+            <Text>ID: {item[0]?.value || 'N/A'}</Text>
+            <Text>Loja: {item[1]?.value || 'N/A'}</Text>
+            <Text>Quantidade: {item[2]?.value || 'N/A'}</Text>
+            <Text>Email: {item[3]?.value || 'N/A'}</Text>
+            <Text>Data: {item[4]?.value || 'N/A'}</Text>
+          </View>
+        ))}
+      </ScrollView>
       <BackButton />
     </SafeAreaView>
   );
@@ -246,6 +323,16 @@ const styles = StyleSheet.create({
   },
   botaoVoltar: {
     marginTop: 36,
+  },
+  jsonContainer: {
+    marginTop: 20,
+    width: '100%',
+  },
+  jsonItem: {
+    padding: 10,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 8,
+    marginBottom: 10,
   },
 });
 

@@ -8,6 +8,9 @@ import Entrega from './src/pages/Entrega';
 import Delivery from './src/pages/Delivery';
 import NotDelivery from './src/pages/NotDelivery';
 import WebUberView from './src/pages/WebUberView';
+import Cadastro from './src/pages/Cadastro';
+import Login from './src/pages/Login';
+import UserDeliveries from './src/pages/UserDeliveries';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +25,9 @@ export default function App() {
         <Stack.Screen name="Delivery" component={Delivery}/>
         <Stack.Screen name="Not Delivery" component={NotDelivery}/>
         <Stack.Screen name="WebUberView" component={WebUberView}/>
+        <Stack.Screen name="Cadastro" component={Cadastro}/>
+        <Stack.Screen name="Login" component={Login}/>
+        <Stack.Screen name="UserDeliveries" component={UserDeliveries}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

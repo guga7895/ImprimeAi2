@@ -5,13 +5,13 @@ import BodyStore from '../components/BodyStore';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Loja = ({route}) => {
-  const { loja } = route.params;
+  const { loja, user } = route.params;
 
   return (
     <SafeAreaProvider>
         <View style={styles.container}>
-          <Header lojaNome={loja.nome}/>
-          <BodyStore loja={loja}/>
+          <Header lojaNome={loja.nome} user={user}/>
+          <BodyStore loja={loja} user={user}/>
         </View>
     </SafeAreaProvider>
   );

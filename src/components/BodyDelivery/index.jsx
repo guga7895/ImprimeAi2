@@ -8,16 +8,17 @@ import opcoesAgendamento from '../../data/opcoesAgendamento.json';
 import opcoesEntrega from '../../data/opcoesEntrega.json';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const BodyDelivery = ({loja}) => {
-    const[opcaoAgendamento,setOpcaoAgendamento] = useState('Agendar impressão');
+const BodyDelivery = ({ loja, quantity, user }) => {
+    const [opcaoAgendamento, setOpcaoAgendamento] = useState('Agendar impressão');
     const [date, setDate] = useState(new Date());
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [dateSelected, setDateSelected] = useState(false);
-    const [opcaoEntrega, setoOpcaoEntrega] = useState('');
+    const [opcaoEntrega, setOpcaoEntrega] = useState('');
     const [endereco, setEndereco] = useState('');
     const navigation = useNavigation();
 
     const onChange = (event, selectedDate) => {
+        console.log(user);
         const currentDate = selectedDate || date;
         setShowDatePicker(false);
         setDate(currentDate);
@@ -25,10 +26,11 @@ const BodyDelivery = ({loja}) => {
     };
 
     const handleNext = () => {
+        const data = date.toString(); // Convert date to string
         if (opcaoEntrega === 'Entregar na minha casa') {
-            navigation.navigate('Delivery', { loja: loja , opcaoEntrega,endereco});
+            navigation.navigate('Delivery', { loja, opcaoEntrega, endereco, quantity, user, data });
         } else if (opcaoEntrega === 'Irei buscar a impressão') {
-            navigation.navigate('Not Delivery', { loja: loja, opcaoEntrega,endereco });
+            navigation.navigate('Not Delivery', { loja, opcaoEntrega, endereco, quantity, user });
         }
     };
 
@@ -36,20 +38,20 @@ const BodyDelivery = ({loja}) => {
         <SafeAreaView style={styles.container}>
             <Text style={styles.titleLabel}> Por favor, insira os detalhes da sua entrega.</Text>
             <View style={styles.pickerContainer}>
-                    <Text style={styles.pickerLabel}>Tipo de impressão</Text>
-                    <Picker
-                        selectedValue={opcaoAgendamento}
-                        onValueChange={(itemValue) => setOpcaoAgendamento(itemValue)}
-                        style={styles.picker}
-                    >
-                        {opcoesAgendamento.map((option) => (
-                            <Picker.Item key={option.value} label={option.label} value={option.value} />
-                        ))}
-                    </Picker>
+                <Text style={styles.pickerLabel}>Tipo de impressão</Text>
+                <Picker
+                    selectedValue={opcaoAgendamento}
+                    onValueChange={(itemValue) => setOpcaoAgendamento(itemValue)}
+                    style={styles.picker}
+                >
+                    {opcoesAgendamento.map((option) => (
+                        <Picker.Item key={option.value} label={option.label} value={option.value} />
+                    ))}
+                </Picker>
             </View>
             {opcaoAgendamento === 'Agendar impressão' && (
                 <View style={styles.dateContainer}>
-                    <Button style={styles.datePickerButton} onPress={() => setShowDatePicker(true)} title={dateSelected ? "Alterar Data":"Selecionar Data"} />
+                    <Button style={styles.datePickerButton} onPress={() => setShowDatePicker(true)} title={dateSelected ? "Alterar Data" : "Selecionar Data"} />
                     {showDatePicker && (
                         <DateTimePicker
                             value={date}
@@ -69,7 +71,7 @@ const BodyDelivery = ({loja}) => {
                 <Text style={styles.pickerLabel}>Tipo de entrega</Text>
                 <Picker
                     selectedValue={opcaoEntrega}
-                    onValueChange={(itemValue) => setoOpcaoEntrega(itemValue)}
+                    onValueChange={(itemValue) => setOpcaoEntrega(itemValue)}
                     style={styles.picker}
                 >
                     {opcoesEntrega.map((option) => (
@@ -79,18 +81,19 @@ const BodyDelivery = ({loja}) => {
             </View>
             {opcaoEntrega === 'Entregar na minha casa' && (
                 <View style={styles.addressContainer}>
-                <TextInput 
-                    placeholder="Insira o seu endereço"  
-                    style={styles.addressInput}
-                    value={endereco}
-                    onChangeText={setEndereco} />
-                <Button title="Confirmar"/>
-            </View>
+                    <TextInput 
+                        placeholder="Insira o seu endereço"  
+                        style={styles.addressInput}
+                        value={endereco}
+                        onChangeText={setEndereco} 
+                    />
+                    <Button title="Confirmar" />
+                </View>
             )}
             <View style={styles.buttonNext}>
-                <Button color="green" title="Avançar" onPress={handleNext}/>
+                <Button color="green" title="Avançar" onPress={handleNext} />
             </View>
-            <BackButton/>
+            <BackButton />
         </SafeAreaView>
     );
 }
@@ -102,8 +105,7 @@ const styles = StyleSheet.create({
         padding: 16,
         width: '100%'
     },
-    datePickerButton:{
-    },
+    datePickerButton: {},
     titleLabel: {
         marginBottom: 18,
         fontSize: 16,
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
         textAlign: 'left',
     },
     pickerContainer: {
-        flexDirection:'row',
+        flexDirection: 'row',
         marginTop: 16,
         marginBottom: 4,
         backgroundColor: '#fff', 
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     dateContainer: {
-        flexDirection:'row',
+        flexDirection: 'row',
         borderRadius: 10, 
         paddingHorizontal: 5, 
         paddingVertical: 5,
@@ -142,13 +144,13 @@ const styles = StyleSheet.create({
         borderColor: '#ccc',
         borderRadius: 4,
         alignItems: 'center',
-        marginLeft : 16,
+        marginLeft: 16,
     },
     dateText: {
         fontSize: 14,
     },
-    addressContainer:{
-        flexDirection:'row',
+    addressContainer: {
+        flexDirection: 'row',
         backgroundColor: '#fff', 
         borderRadius: 10, 
         paddingHorizontal: 5, 
@@ -165,9 +167,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         textAlign: 'center',
     },
-    buttonNext:{
+    buttonNext: {
         marginTop: 30,
-        marginBottom:28,
+        marginBottom: 28,
         width: '50%',
     }
 });

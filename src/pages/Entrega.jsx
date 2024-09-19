@@ -5,11 +5,11 @@ import BodyDelivery from '../components/BodyDelivery/index';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Entrega = ({route}) => {
-    const {loja} = route.params;
+    const {loja, quantity, user} = route.params;
     return (
         <SafeAreaProvider>
-            <Header/>
-            <BodyDelivery loja={loja}/>
+            <Header user={user}/>
+            <BodyDelivery loja={loja} quantity={quantity} user={user}/>
         </SafeAreaProvider>
     )
 }

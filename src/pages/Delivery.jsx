@@ -6,11 +6,11 @@ import BodyDeliveryOptions from '../components/BodyDeliveryOptions/index'
 
 
 const Delivery = ({route}) => {
-    const { loja, opcaoEntrega, endereco } = route.params;
+    const { loja, opcaoEntrega, endereco, quantity, user, data } = route.params;
     return (
         <SafeAreaProvider>
-            <Header/>
-            <BodyDeliveryOptions loja={loja} opcaoEntrega={opcaoEntrega} endereco={endereco}/>
+            <Header user={user}/>
+            <BodyDeliveryOptions loja={loja} opcaoEntrega={opcaoEntrega} endereco={endereco} quantity={quantity} user={user} data={data}/>
         </SafeAreaProvider>
     )
 }

@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import BackButton from '../BackButton/index';
 
-const BodyStore = ({loja}) => {
+const BodyStore = ({loja, user}) => {
   const navigation = useNavigation();
   const teste = require('../../data/StoreImgs/lojaA.png')
   return (
@@ -16,7 +16,7 @@ const BodyStore = ({loja}) => {
       </View>
       <Text style={styles.rating}>O rating desta loja é: {loja.rating}/10</Text>
       <View style={styles.impressaoSolicitar}>
-        <Button title="Solicitar impressão" onPress={() => navigation.navigate('Impressao',{loja})}/>
+        <Button title="Solicitar impressão" onPress={() => navigation.navigate('Impressao',{loja: loja, user: user})}/>
       </View> 
       <View style={styles.botaoVoltar}>
         <BackButton/>
