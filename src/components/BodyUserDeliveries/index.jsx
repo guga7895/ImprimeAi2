@@ -28,7 +28,7 @@ const Deliveries = ({ user }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Minhas Entregas Agendadas</Text>
+      <Text style={styles.title}>Minhas Entregas</Text>
       <FlatList
         data={deliveries}
         keyExtractor={(item, index) => index.toString()}
@@ -42,10 +42,10 @@ const Deliveries = ({ user }) => {
           </View>
         )}
         ListEmptyComponent={() => (
-          <Text style={styles.emptyListText}>Nenhuma entrega agendada.</Text>
+          <Text style={styles.emptyListText}>Nenhuma entrega encontrada</Text>
         )}
       />
-      <BackButton/>
+      <BackButton />
     </SafeAreaView>
   );
 };

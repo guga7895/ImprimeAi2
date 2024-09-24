@@ -15,6 +15,7 @@ const BodyStore = ({loja, user}) => {
         <Text style={styles.descricao}>{loja.descricao}</Text>
       </View>
       <Text style={styles.rating}>O rating desta loja é: {loja.rating}/10</Text>
+      <Text style={styles.rating}>O endereço dessa loja é: {loja.endereco}</Text>
       <View style={styles.impressaoSolicitar}>
         <Button title="Solicitar impressão" onPress={() => navigation.navigate('Impressao',{loja: loja, user: user})}/>
       </View> 

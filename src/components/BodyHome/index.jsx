@@ -8,21 +8,18 @@ const Main = ({ user }) => {
   const [text, setText] = useState('');
   const [filteredStores, setFilteredStores] = useState([]);
 
-  const ApertarBotão = () => {
+  const navigation = useNavigation();
+
+  const ApertarBotao = () => {
     const results = lojas.filter(loja =>
       loja.nome && loja.nome.toLowerCase().includes(text.toLowerCase())
     );
     setFilteredStores(results);
   };
 
-  
-
   const handleDeliveriesPress = () => {
     navigation.navigate('UserDeliveries', { user: user });
   };
-
-
-  const navigation = useNavigation();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -35,7 +32,7 @@ const Main = ({ user }) => {
         onChangeText={setText}
       />
       <View style={styles.buttonContainer}>
-        <Button title="Buscar" onPress={ApertarBotão} />
+        <Button title="Buscar" onPress={ApertarBotao} />
       </View>
       <Text style={styles.subtitle}>Lojas encontradas</Text>
       <View style={styles.flatListBackground}>
@@ -119,6 +116,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 16,
     color: '#666',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginVertical: 16,
   },
 });
 

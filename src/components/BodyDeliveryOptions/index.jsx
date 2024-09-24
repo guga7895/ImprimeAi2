@@ -9,7 +9,7 @@ import * as FileSystem from 'expo-file-system';
 const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, data }) => {
   const navigation = useNavigation();
   const [trackingUrl, setTrackingUrl] = useState('');
-  const [jsonData, setJsonData] = useState([]); // Add jsonData state variable
+  const [jsonData, setJsonData] = useState([]); 
 
   const filePath = FileSystem.documentDirectory + 'requests.json';
 
@@ -39,13 +39,10 @@ const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, dat
   const addData = async (loja, opcaoEntrega, endereco, user, data) => {
     console.log('addData - loja:', loja); // Debugging log
 
-    // Step 1: Read the existing data
     const jsonData = await readJsonFile();
 
-    // Step 2: Determine the new ID
     const newId = jsonData.length + 1;
 
-    // Step 3: Create the new item
     const newItem = [
       { "label": "ID", "value": newId.toString() },
       { "label": "Loja", "value": loja.nome },
@@ -54,10 +51,8 @@ const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, dat
       { "label": "Data", "value": data }
     ];
 
-    // Step 4: Push new data to the array
     jsonData.push(newItem);
 
-    // Step 5: Write the updated data back to the file
     await writeJsonFile(jsonData);
 
     setJsonData(jsonData);
@@ -148,10 +143,10 @@ const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, dat
 
   const createDelivery = async (token, quoteId) => {
     const now = new Date();
-    const pickupReadyTime = new Date(now.getTime() + 40 * 60 * 1000).toISOString(); // 10 minutes from now
-    const pickupDeadlineTime = new Date(now.getTime() + 60 * 60 * 1000).toISOString(); // 30 minutes from now
-    const dropoffReadyTime = new Date(now.getTime() + 60 * 60 * 1000).toISOString(); // 40 minutes from now
-    const dropoffDeadlineTime = new Date(now.getTime() + 80 * 60 * 1000).toISOString(); // 60 minutes from now
+    const pickupReadyTime = new Date(now.getTime() + 40 * 60 * 1000).toISOString(); 
+    const pickupDeadlineTime = new Date(now.getTime() + 60 * 60 * 1000).toISOString(); 
+    const dropoffReadyTime = new Date(now.getTime() + 60 * 60 * 1000).toISOString(); 
+    const dropoffDeadlineTime = new Date(now.getTime() + 80 * 60 * 1000).toISOString(); 
     try {
       const response = await fetch(`https://api.uber.com/v1/customers/b9e7be35-f091-5fd5-a6f8-abdb92b5f514/deliveries`, {
         method: 'POST',
@@ -195,18 +190,18 @@ const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, dat
       console.log('Delivery Response:', data);
       if (response.ok) {
         setTrackingUrl(data.tracking_url);
-        Alert.alert('Success', 'Fake Uber delivery created successfully!');
+        Alert.alert('Successo!', 'Pedido criado! para acompanhar, clique em "Acompanhar seu pedido:"');
       } else {
-        Alert.alert('Error', data.message || 'Failed to create delivery');
+        Alert.alert('Erro!', data.message || 'Falha ao criar o pedido.');
       }
     } catch (error) {
-      Alert.alert('Error', error.message || 'Failed to create delivery');
+      Alert.alert('Erro!', error.message || 'Falha ao criar o pedido.');
     }
   };
 
   const handleUberPress = async () => {
-    console.log('handleUberPress - loja:', loja); // Debugging log
-    await addData(loja, opcaoEntrega, endereco, user, data); // Pass the appropriate parameters
+    console.log('handleUberPress - loja:', loja); 
+    await addData(loja, opcaoEntrega, endereco, user, data); 
     const token = await getOAuthToken();
     if (token) {
       const quoteId = await createQuote(token);
@@ -229,7 +224,6 @@ const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, dat
     setJsonData(data);
   };
 
-  // Load JSON data when the component mounts
   useEffect(() => {
     loadJsonData();
   }, []);
@@ -243,17 +237,7 @@ const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, dat
       <TouchableOpacity onPress={handleTrackDelivery} style={styles.trackButton}>
         <Text style={styles.trackButtonText}>Acompanhar seu pedido:</Text>
       </TouchableOpacity>
-      <ScrollView style={styles.jsonContainer}>
-        {jsonData.map((item, index) => (
-          <View key={index} style={styles.jsonItem}>
-            <Text>ID: {item[0]?.value || 'N/A'}</Text>
-            <Text>Loja: {item[1]?.value || 'N/A'}</Text>
-            <Text>Quantidade: {item[2]?.value || 'N/A'}</Text>
-            <Text>Email: {item[3]?.value || 'N/A'}</Text>
-            <Text>Data: {item[4]?.value || 'N/A'}</Text>
-          </View>
-        ))}
-      </ScrollView>
+      
       <BackButton />
     </SafeAreaView>
   );
