@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import BackButton from '../BackButton/index';
 import { WebView } from 'react-native-webview';
 import * as FileSystem from 'expo-file-system';
+import { UBER_CLIENT_ID, UBER_CLIENT_SECRET,USER_ID } from '@env';
+
 
 const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, data }) => {
   const navigation = useNavigation();
@@ -66,8 +68,8 @@ const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, dat
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams({
-          client_id: 'JiTjBGiywfkwIoLiX5QGLS0DKQFAFZgv', // Replace with your client ID
-          client_secret: 'E5bi7srFsGBSQrm6RGlTXmRfeL-9fVNW5JVVOJcq', // Replace with your client secret
+          client_id: UBER_CLIENT_ID,
+          client_secret: UBER_CLIENT_SECRET,
           grant_type: 'client_credentials',
           scope: 'eats.deliveries',
         }).toString(),
@@ -93,7 +95,7 @@ const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, dat
     const dropoffReadyTime = new Date(now.getTime() + 30 * 60 * 1000).toISOString(); // 40 minutes from now
     const dropoffDeadlineTime = new Date(now.getTime() + 60 * 60 * 1000).toISOString(); // 60 minutes from now
     try {
-      const response = await fetch(`https://api.uber.com/v1/customers/b9e7be35-f091-5fd5-a6f8-abdb92b5f514/delivery_quotes`, {
+      const response = await fetch(`https://api.uber.com/v1/customers/${USER_ID}/delivery_quotes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -148,7 +150,7 @@ const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, dat
     const dropoffReadyTime = new Date(now.getTime() + 60 * 60 * 1000).toISOString(); 
     const dropoffDeadlineTime = new Date(now.getTime() + 80 * 60 * 1000).toISOString(); 
     try {
-      const response = await fetch(`https://api.uber.com/v1/customers/b9e7be35-f091-5fd5-a6f8-abdb92b5f514/deliveries`, {
+      const response = await fetch(`https://api.uber.com/v1/customers/${USER_ID}/deliveries`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
