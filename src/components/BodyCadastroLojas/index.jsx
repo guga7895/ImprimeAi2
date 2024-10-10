@@ -25,24 +25,26 @@ const CadastroLojas = () => {
     const newPath = FileSystem.documentDirectory + imageName;
 
     try {
-      await FileSystem.copyAsync({
+      await FileSystem.copyAsync({ //copia a imagem do image (URI capturada) para o newPath (novo diretório do app)
         from: image,
         to: newPath,
       });
 
-      const user = { nomeLoja, endereco, email, password, descricao, ImagemLoja: newPath };
       const fileUri = FileSystem.documentDirectory + 'lojas.json';
-
       const fileExists = await FileSystem.getInfoAsync(fileUri);
-      let users = [];
+      let lojas = [];
 
       if (fileExists.exists) {
         const fileContent = await FileSystem.readAsStringAsync(fileUri);
-        users = JSON.parse(fileContent);
+        lojas = JSON.parse(fileContent);
       }
 
-      users.push(user);
-      await FileSystem.writeAsStringAsync(fileUri, JSON.stringify(users));
+      const newId = lojas.length > 0 ? Math.max(...lojas.map(loja => loja.id)) + 1 : 1;
+      const rating = Math.floor(Math.random() * 10) + 1; // Generate a random number between 1 and 10
+      const newLoja = { id: newId, nomeLoja, endereco, email, password, descricao, ImagemLoja: newPath, rating };
+
+      lojas.push(newLoja);
+      await FileSystem.writeAsStringAsync(fileUri, JSON.stringify(lojas));
       Alert.alert('Success', 'Usuário registrado com sucesso!');
       setNomeLoja('');
       setEmail('');
@@ -50,9 +52,19 @@ const CadastroLojas = () => {
       setEndereco('');
       setDescricao('');
       setImage(null);
-      navigation.navigate('LoginLojas', { loja: user, image });
+      navigation.navigate('LoginLojas', { loja: newLoja, image });
     } catch (error) {
       Alert.alert('Error', 'Um erro ocorreu. Tente novamente!');
+    }
+  };
+
+  const clearStores = async () => {
+    const fileUri = FileSystem.documentDirectory + 'lojas.json';
+    try {
+      await FileSystem.writeAsStringAsync(fileUri, JSON.stringify([]));
+      Alert.alert('Success', 'Todas as lojas foram removidas!');
+    } catch (error) {
+      Alert.alert('Error', 'Um erro ocorreu ao tentar remover as lojas. Tente novamente!');
     }
   };
 
@@ -65,7 +77,7 @@ const CadastroLojas = () => {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri); // Correctly set the image URI
+      setImage(result.assets[0].uri);
     }
   };
 

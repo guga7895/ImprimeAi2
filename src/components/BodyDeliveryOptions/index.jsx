@@ -47,7 +47,7 @@ const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, dat
 
     const newItem = [
       { "label": "ID", "value": newId.toString() },
-      { "label": "Loja", "value": loja.nome },
+      { "label": "Loja", "value": loja.nomeLoja },
       { "label": "Quantidade", "value": quantity },
       { "label": "Email", "value": user.email },
       { "label": "Data", "value": data }

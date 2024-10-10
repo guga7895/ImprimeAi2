@@ -1,18 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, FlatList, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import lojas from '../../data/lojas.json'; 
+import * as FileSystem from 'expo-file-system';
 
-const Main = ({ user }) => {
+const BodyHome = ({ user }) => {
   const [text, setText] = useState('');
+  const [lojas, setLojas] = useState([]);
   const [filteredStores, setFilteredStores] = useState([]);
 
   const navigation = useNavigation();
 
+  useEffect(() => {
+    const fetchLojas = async () => {
+      try {
+        const fileUri = FileSystem.documentDirectory + 'lojas.json';
+        const fileExists = await FileSystem.getInfoAsync(fileUri);
+
+        if (fileExists.exists) {
+          const fileContent = await FileSystem.readAsStringAsync(fileUri);
+          const data = JSON.parse(fileContent);
+          setLojas(data);
+        } else {
+          console.error('File not found:', fileUri);
+        }
+      } catch (error) {
+        console.error('Error fetching lojas:', error);
+      }
+    };
+
+    fetchLojas();
+  }, []);
+
   const ApertarBotao = () => {
     const results = lojas.filter(loja =>
-      loja.nome && loja.nome.toLowerCase().includes(text.toLowerCase())
+      loja.nomeLoja && loja.nomeLoja.toLowerCase().includes(text.toLowerCase())
     );
     setFilteredStores(results);
   };
@@ -41,10 +63,10 @@ const Main = ({ user }) => {
           keyExtractor={item => item.id.toString()}
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => {
-              navigation.navigate('Loja', { loja: item , user: user });
+              navigation.navigate('Loja', { loja: item, user: user });
             }}>
               <View style={styles.storeItem}>
-                <Text style={styles.storeName}>{item.nome}</Text>
+                <Text style={styles.storeName}>{item.nomeLoja}</Text>
                 <Text style={styles.storeAddress}>{item.endereco}</Text>
               </View>
             </TouchableOpacity>
@@ -124,4 +146,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Main;
+export default BodyHome;

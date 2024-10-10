@@ -4,12 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import BackButton from '../BackButton/index';
 
-const BodyStore = ({loja, user}) => {
+const BodyStore = ({ loja, user }) => {
   const navigation = useNavigation();
-  const teste = require('../../data/StoreImgs/lojaA.png')
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={teste} style={styles.imageLoja}/>
+      {loja.ImagemLoja && <Image source={{ uri: loja.ImagemLoja }} style={styles.image} />}
       <Text style={styles.titulo}>Descrição</Text>
       <View style={styles.backgroundContainer}>
         <Text style={styles.descricao}>{loja.descricao}</Text>
@@ -17,10 +16,13 @@ const BodyStore = ({loja, user}) => {
       <Text style={styles.rating}>O rating desta loja é: {loja.rating}/10</Text>
       <Text style={styles.rating}>O endereço dessa loja é: {loja.endereco}</Text>
       <View style={styles.impressaoSolicitar}>
-        <Button title="Solicitar impressão" onPress={() => navigation.navigate('Impressao',{loja: loja, user: user})}/>
-      </View> 
+        <Button title="Solicitar impressão" onPress={() => {
+          console.log(loja.nomeLoja);
+          navigation.navigate('Impressao', { loja: loja, user: user })}
+         } />
+      </View>
       <View style={styles.botaoVoltar}>
-        <BackButton/>
+        <BackButton />
       </View>
     </SafeAreaView>
   );
@@ -33,34 +35,39 @@ const styles = StyleSheet.create({
     padding: 16,
     width: '100%',
   },
-  imageLoja: {
+  image: { // Added image style
+    width: 200,
+    height: 200,
+    marginBottom: 16,
   },
-  descricao:{
-    textAlign: 'left', 
-    fontSize: 16, 
-    lineHeight: 24, 
-    color: '#333', 
+  descricao: {
+    textAlign: 'left',
+    fontSize: 16,
+    lineHeight: 24,
+    color: '#333',
     padding: 10,
   },
   backgroundContainer: {
     backgroundColor: '#e0e0e0',
     padding: 10,
-    marginTop:12, 
-    borderRadius: 10,     
+    marginTop: 12,
+    borderRadius: 10,
   },
   titulo: {
-    marginTop:24,
-    fontWeight: 'bold'
+    marginTop: 24,
+    fontWeight: 'bold',
   },
   rating: {
-    marginTop: 12,
+    marginTop: 18,
   },
   impressaoSolicitar: {
-    marginTop:12,
-    width:'50%',
+    marginTop: 24,
+    width: '50%',
   },
   botaoVoltar: {
-    marginTop:36
+    width: '50%',
+    position: 'absolute',
+    bottom: 36,
   }
 });
 
