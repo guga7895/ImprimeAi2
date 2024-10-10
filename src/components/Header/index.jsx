@@ -8,7 +8,7 @@ const Header = ({ lojaNome: nomeLojaSelecionada, isHomePage, openSidebar, user }
   const navigation = useNavigation();
 
   const handleHomePress = () => {
-    navigation.navigate('Home', { user });
+    navigation.navigate('FrontPage', { user });
     console.log(user);
   };
 
@@ -63,10 +63,12 @@ const styles = StyleSheet.create({
   imprimeAi: {
     textAlign: 'right',
     color: 'white',
+    fontSize: 18,
   },
   imprimeAiCentered: {
     textAlign: 'center',
     color: 'white',
+    fontSize: 18,
   },
 });
 

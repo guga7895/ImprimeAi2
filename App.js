@@ -11,6 +11,10 @@ import WebUberView from './src/pages/WebUberView';
 import Cadastro from './src/pages/Cadastro';
 import Login from './src/pages/Login';
 import UserDeliveries from './src/pages/UserDeliveries';
+import FrontPage from './src/pages/FrontPage';
+import LoginLojas from './src/pages/LoginLojas';
+import CadastroLojas from './src/pages/CadastroLojas';
+import HomeLojas from './src/pages/HomeLojas';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +22,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="FrontPage" component={FrontPage}/>
+        <Stack.Screen name="LoginLojas" component={LoginLojas}/>
+        <Stack.Screen name="CadastroLojas" component={CadastroLojas}/>
+        <Stack.Screen name="HomeLojas" component={HomeLojas}/>
         <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen name="Loja" component={Loja}/>
         <Stack.Screen name="Impressao" component={Impressao}/>

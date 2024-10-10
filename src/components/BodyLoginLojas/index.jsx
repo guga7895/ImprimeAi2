@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as FileSystem from 'expo-file-system';
 import BackButton from '../BackButton';
 import { useNavigation } from '@react-navigation/native';
 
-const Login = () => {
+const Login = ({image}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
-
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -17,7 +16,7 @@ const Login = () => {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + 'users.json';
+    const fileUri = FileSystem.documentDirectory + 'lojas.json';
 
     try {
       const fileExists = await FileSystem.getInfoAsync(fileUri);
@@ -27,12 +26,12 @@ const Login = () => {
       }
 
       const fileContent = await FileSystem.readAsStringAsync(fileUri);
-      const users = JSON.parse(fileContent);
+      const lojas = JSON.parse(fileContent);
 
-      const user = users.find(u => u.email === email && u.password === password);
-      if (user) {
+      const loja = lojas.find(u => u.email === email && u.password === password);
+      if (loja) {
         Alert.alert('Success', 'Login bem sucedido!');
-        navigation.navigate('Home', {user:user});
+        navigation.navigate('HomeLojas', { loja: loja, image});
       } else {
         Alert.alert('Error', 'Email ou senha inválido');
       }
@@ -59,7 +58,11 @@ const Login = () => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Login" onPress={handleLogin} />
+      <Button title="Entrar" onPress={handleLogin} />
+      <TouchableOpacity onPress={() => navigation.navigate("CadastroLojas")}>
+        <Text style={styles.signUpTexto}>Loja não cadastrada? Cadastre-se já!</Text>
+      </TouchableOpacity>
+      <View style={styles.flex} />
       <BackButton style={styles.backButton} />
     </SafeAreaView>
   );
@@ -85,9 +88,17 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingHorizontal: 8,
   },
+  signUpTexto: {
+    color: '#007BFF',
+    textAlign: 'center',
+    marginTop: 16,
+  },
+  flex: {
+    flex: 1,
+  },
   backButton: {
     alignSelf: 'center',
-    marginTop: 20,
+    marginBottom: 20,
   },
 });
 
