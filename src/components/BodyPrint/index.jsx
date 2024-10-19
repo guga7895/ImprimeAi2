@@ -82,7 +82,7 @@ const BodyPrint = ({loja,user}) => {
                 </Picker>
             </View>
             <View style={styles.buttonNext}>
-                <Button color="green" title="Avançar" onPress={() => navigation.navigate('Entrega',{loja,quantity,user})}/>
+                <Button color="green" title="Avançar" onPress={() => navigation.navigate('Entrega',{loja,quantity,user, document})}/>
             </View>
             <BackButton />
         </SafeAreaView>

@@ -15,6 +15,7 @@ import FrontPage from './src/pages/FrontPage';
 import LoginLojas from './src/pages/LoginLojas';
 import CadastroLojas from './src/pages/CadastroLojas';
 import HomeLojas from './src/pages/HomeLojas';
+import PedidoLoja from './src/pages/PedidoLoja';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +37,7 @@ export default function App() {
         <Stack.Screen name="Cadastro" component={Cadastro}/>
         <Stack.Screen name="Login" component={Login}/>
         <Stack.Screen name="UserDeliveries" component={UserDeliveries}/>
+        <Stack.Screen name="PedidoLoja" component={PedidoLoja}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

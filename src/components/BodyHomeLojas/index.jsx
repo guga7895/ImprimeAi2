@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as FileSystem from 'expo-file-system';
 import { Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const BodyHomeLoja = ({ loja }) => {
   const [deliveries, setDeliveries] = useState([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchDeliveries = async () => {
@@ -30,6 +32,10 @@ const BodyHomeLoja = ({ loja }) => {
     fetchDeliveries();
   }, [loja.nomeLoja]);
 
+  const handlePress = (pedido) => {
+    navigation.navigate('PedidoLoja', { pedido, loja });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       {loja && <Text>Bem vindo ao painel de sua loja!</Text>}
@@ -42,13 +48,15 @@ const BodyHomeLoja = ({ loja }) => {
           data={deliveries}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
-            <View style={styles.storeItem}>
-              {item.map((detail, index) => (
-                <Text key={index} style={styles.storeDetail}>
-                  {detail.label}: {detail.value}
-                </Text>
-              ))}
-            </View>
+            <TouchableOpacity onPress={() => handlePress(item)}>
+              <View style={styles.storeItem}>
+                {item.map((detail, index) => (
+                  <Text key={index} style={styles.storeDetail}>
+                    {detail.label}: {detail.value}
+                  </Text>
+                ))}
+              </View>
+            </TouchableOpacity>
           )}
           ListEmptyComponent={() => (
             <Text style={styles.emptyListText}>Nenhuma entrega encontrada</Text>

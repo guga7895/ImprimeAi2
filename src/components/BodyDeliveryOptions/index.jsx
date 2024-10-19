@@ -8,7 +8,7 @@ import * as FileSystem from 'expo-file-system';
 import { UBER_CLIENT_ID, UBER_CLIENT_SECRET,USER_ID } from '@env';
 
 
-const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, data }) => {
+const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, data, document }) => {
   const navigation = useNavigation();
   const [trackingUrl, setTrackingUrl] = useState('');
   const [jsonData, setJsonData] = useState([]); 
@@ -38,25 +38,41 @@ const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, dat
     }
   };
 
-  const addData = async (loja, opcaoEntrega, endereco, user, data) => {
+  const addData = async (loja, opcaoEntrega, endereco, user, data, document) => {
     console.log('addData - loja:', loja); // Debugging log
-
+  
     const jsonData = await readJsonFile();
-
+  
     const newId = jsonData.length + 1;
-
+  
+    // Copy the document to a persistent location
+    const documentName = document.uri.split('/').pop();
+    const newDocumentPath = FileSystem.documentDirectory + documentName;
+  
+    try {
+      await FileSystem.copyAsync({
+        from: document.uri,
+        to: newDocumentPath,
+      });
+    } catch (error) {
+      console.error('Error copying document:', error);
+      Alert.alert('Error', 'Failed to copy document');
+      return;
+    }
+  
     const newItem = [
       { "label": "ID", "value": newId.toString() },
       { "label": "Loja", "value": loja.nomeLoja },
       { "label": "Quantidade", "value": quantity },
       { "label": "Email", "value": user.email },
-      { "label": "Data", "value": data }
+      { "label": "Data", "value": data },
+      { "label": "Documento", "value": newDocumentPath } // Include the document path
     ];
-
+  
     jsonData.push(newItem);
-
+  
     await writeJsonFile(jsonData);
-
+  
     setJsonData(jsonData);
   };
 
@@ -203,7 +219,7 @@ const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, dat
 
   const handleUberPress = async () => {
     console.log('handleUberPress - loja:', loja); 
-    await addData(loja, opcaoEntrega, endereco, user, data); 
+    await addData(loja, opcaoEntrega, endereco, user, data, document); // Pass the document
     const token = await getOAuthToken();
     if (token) {
       const quoteId = await createQuote(token);

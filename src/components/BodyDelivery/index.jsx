@@ -8,7 +8,7 @@ import opcoesAgendamento from '../../data/opcoesAgendamento.json';
 import opcoesEntrega from '../../data/opcoesEntrega.json';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const BodyDelivery = ({ loja, quantity, user }) => {
+const BodyDelivery = ({ loja, quantity, user, document }) => {
     const [opcaoAgendamento, setOpcaoAgendamento] = useState('Agendar impressão');
     const [date, setDate] = useState(new Date());
     const [showDatePicker, setShowDatePicker] = useState(false);
@@ -28,7 +28,7 @@ const BodyDelivery = ({ loja, quantity, user }) => {
     const handleNext = () => {
         const data = date.toString(); // Convert date to string
         if (opcaoEntrega === 'Entregar na minha casa') {
-            navigation.navigate('Delivery', { loja, opcaoEntrega, endereco, quantity, user, data });
+            navigation.navigate('Delivery', { loja, opcaoEntrega, endereco, quantity, user, data, document });
         } else if (opcaoEntrega === 'Irei buscar a impressão') {
             navigation.navigate('Not Delivery', { loja, opcaoEntrega, endereco, quantity, user });
         }
