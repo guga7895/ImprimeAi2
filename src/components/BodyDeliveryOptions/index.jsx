@@ -159,6 +159,10 @@ const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, dat
     }
   };
 
+  const handleHomePress = () => {
+    navigation.navigate('Home', { user });
+  };
+
   const createDelivery = async (token, quoteId) => {
     const now = new Date();
     const pickupReadyTime = new Date(now.getTime() + 40 * 60 * 1000).toISOString(); 
@@ -255,13 +259,30 @@ const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, dat
       <TouchableOpacity onPress={handleTrackDelivery} style={styles.trackButton}>
         <Text style={styles.trackButtonText}>Acompanhar seu pedido:</Text>
       </TouchableOpacity>
-      
       <BackButton />
+      <TouchableOpacity onPress={handleHomePress} style={styles.homeButton}>
+        <Text style={styles.homeButtonText}>Voltar para Home</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  homeButtonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  homeButton: {
+    marginTop: 60,
+    padding: 10,
+    backgroundColor: '#007AFF',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
+  },
   container: {
     flex: 1,
     alignItems: 'center',

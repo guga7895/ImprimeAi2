@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as FileSystem from 'expo-file-system';
 import BackButton from '../BackButton';
@@ -35,9 +35,17 @@ const Deliveries = ({ user }) => {
         renderItem={({ item }) => (
           <View style={styles.deliveryItem}>
             {item.map((detail, index) => (
-              <Text key={index} style={styles.deliveryDetail}>
-                {detail.label}: {detail.value}
-              </Text>
+              detail.label === 'Documento' ? (
+                <Image
+                  key={index}
+                  source={{ uri: detail.value }}
+                  style={styles.documentImage}
+                />
+              ) : (
+                <Text key={index} style={styles.deliveryDetail}>
+                  {detail.label}: {detail.value}
+                </Text>
+              )
             ))}
           </View>
         )}
@@ -71,6 +79,12 @@ const styles = StyleSheet.create({
   },
   deliveryDetail: {
     fontSize: 16,
+  },
+  documentImage: {
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
+    marginTop: 10,
   },
   emptyListText: {
     textAlign: 'center',
