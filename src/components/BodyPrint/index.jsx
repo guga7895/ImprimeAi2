@@ -36,7 +36,7 @@ const BodyPrint = ({loja,user}) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.previewContainer}>
-                <Text style={styles.previewText}>Preview do documento:</Text>
+                <Text style={styles.previewText}>Insira o esboço de arte desejada!</Text>
                 <View style={styles.previewImageContainer}>
                     <Image 
                         source={document ? { uri: document.uri } : defaultImage} 
@@ -58,7 +58,7 @@ const BodyPrint = ({loja,user}) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.pickerContainer}>
-                <Text style={styles.pickerLabel}>Tipo de papel:</Text>
+                <Text style={styles.pickerLabel}>Tipo de arte:</Text>
                 <Picker
                     selectedValue={selectedOption}
                     onValueChange={(itemValue) => setSelectedOption(itemValue)}
@@ -70,7 +70,7 @@ const BodyPrint = ({loja,user}) => {
                 </Picker>
             </View>
             <View style={styles.pickerContainer}>
-                <Text style={styles.pickerLabel}>Tipo de impressão</Text>
+                <Text style={styles.pickerLabel}>Deseja assinatura?</Text>
                 <Picker
                     selectedValue={selectedOption}
                     onValueChange={(itemValue) => setSelectedOption(itemValue)}

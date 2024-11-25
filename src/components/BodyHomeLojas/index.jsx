@@ -38,11 +38,11 @@ const BodyHomeLoja = ({ loja }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {loja && <Text>Bem vindo ao painel de sua loja!</Text>}
+      {loja && <Text>Bem vindo ao painel de sua loja de arte!</Text>}
       <Text style={styles.title}>{loja.nomeLoja}</Text>
       {loja.ImagemLoja && <Image source={{ uri: loja.ImagemLoja }} style={styles.image} />}
 
-      <Text style={styles.subtitle}>Veja pedidos da sua loja!</Text>
+      <Text style={styles.subtitle}>Veja pedidos da sua arte!</Text>
       <View style={styles.flatListContainer}>
         <FlatList
           data={deliveries}

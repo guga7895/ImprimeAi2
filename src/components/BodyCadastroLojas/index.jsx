@@ -86,7 +86,7 @@ const CadastroLojas = () => {
       <Text style={styles.title}>Cadastre-se!</Text>
       <TextInput
         style={styles.input}
-        placeholder="Nome da Loja"
+        placeholder="Nome"
         value={nomeLoja}
         onChangeText={setNomeLoja}
       />
@@ -107,18 +107,18 @@ const CadastroLojas = () => {
       />
       <TextInput
         style={styles.input}
-        placeholder="Endereço de sua loja"
+        placeholder="Endereço de seu local de entrega"
         value={endereco}
         onChangeText={setEndereco}
       />
       <TextInput
         style={styles.input}
-        placeholder="Descrição da loja"
+        placeholder="Descrição da sua arte"
         value={descricao}
         onChangeText={setDescricao}
       />
       <TouchableOpacity onPress={pickImage} style={styles.imagePicker}>
-        <Text style={styles.imagePickerText}>Selecionar imagem da loja</Text>
+        <Text style={styles.imagePickerText}>Selecionar imagem que representa sua arte!</Text>
       </TouchableOpacity>
       <Button title="Confirmar cadastro" onPress={handleSignup} />
       <BackButton style={styles.backButton} />

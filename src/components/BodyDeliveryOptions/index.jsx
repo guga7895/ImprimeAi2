@@ -253,11 +253,8 @@ const BodyDeliveryOptions = ({ loja, opcaoEntrega, endereco, quantity, user, dat
   return (
     <SafeAreaView style={styles.container}>
       <Text>Solicite sua entrega: </Text>
-      <TouchableOpacity onPress={handleUberPress} style={styles.uberButton}>
-        <Image source={require('../../data/StoreImgs/uberLogo.png')} style={styles.uberLogo} />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleTrackDelivery} style={styles.trackButton}>
-        <Text style={styles.trackButtonText}>Acompanhar seu pedido:</Text>
+      <TouchableOpacity onPress={handleUberPress} style={styles.homeButton}>
+        <Text style={styles.homeButtonText}>Solicitar entrega</Text>
       </TouchableOpacity>
       <BackButton />
       <TouchableOpacity onPress={handleHomePress} style={styles.homeButton}>

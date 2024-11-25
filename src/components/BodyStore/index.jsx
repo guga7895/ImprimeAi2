@@ -8,15 +8,16 @@ const BodyStore = ({ loja, user }) => {
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
+      <Text style={styles.descricao}>Arte de exemplo</Text>
       {loja.ImagemLoja && <Image source={{ uri: loja.ImagemLoja }} style={styles.image} />}
       <Text style={styles.titulo}>Descrição</Text>
       <View style={styles.backgroundContainer}>
         <Text style={styles.descricao}>{loja.descricao}</Text>
       </View>
-      <Text style={styles.rating}>O rating desta loja é: {loja.rating}/10</Text>
-      <Text style={styles.rating}>O endereço dessa loja é: {loja.endereco}</Text>
+      <Text style={styles.rating}>O rating deste artista é: {loja.rating}/10</Text>
+      <Text style={styles.rating}>O endereço desse artista é: {loja.endereco}</Text>
       <View style={styles.impressaoSolicitar}>
-        <Button title="Solicitar impressão" onPress={() => {
+        <Button title="Solicitar arte" onPress={() => {
           console.log(loja.nomeLoja);
           navigation.navigate('Impressao', { loja: loja, user: user })}
          } />

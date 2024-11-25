@@ -25,7 +25,7 @@ const Header = ({ lojaNome: nomeLojaSelecionada, isHomePage, openSidebar, user }
         )}
         <TouchableOpacity onPress={handleHomePress}>
           <Text style={nomeLojaSelecionada ? styles.imprimeAi : styles.imprimeAiCentered}>
-            ImprimeAí
+            InspiraArte 
           </Text>
         </TouchableOpacity>
       </View>

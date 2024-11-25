@@ -60,7 +60,7 @@ const Login = ({image}) => {
       />
       <Button title="Entrar" onPress={handleLogin} />
       <TouchableOpacity onPress={() => navigation.navigate("CadastroLojas")}>
-        <Text style={styles.signUpTexto}>Loja não cadastrada? Cadastre-se já!</Text>
+        <Text style={styles.signUpTexto}>Artista não cadastrado? Cadastre-se já!</Text>
       </TouchableOpacity>
       <View style={styles.flex} />
       <BackButton style={styles.backButton} />

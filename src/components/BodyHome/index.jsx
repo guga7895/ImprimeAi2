@@ -46,7 +46,7 @@ const BodyHome = ({ user }) => {
   return (
     <SafeAreaView style={styles.container}>
       {user && <Text>Seja bem vindo, {user.name}!!</Text>}
-      <Text style={styles.title}>Pesquise papelarias próximas a você</Text>
+      <Text style={styles.title}>Pesquise artistas próximas de você</Text>
       <TextInput
         style={styles.input}
         placeholder="Digite aqui"

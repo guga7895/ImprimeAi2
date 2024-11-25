@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-na
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
+import BackButton from '../BackButton';
+
 
 const PedidoDetails = ({ pedido }) => {
   const documentUri = pedido.find(detail => detail.label === 'Documento')?.value;
@@ -69,6 +71,7 @@ const PedidoDetails = ({ pedido }) => {
           </TouchableOpacity>
         </>
       )}
+      <BackButton/>
     </SafeAreaView>
   );
 };

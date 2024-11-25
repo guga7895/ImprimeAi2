@@ -94,7 +94,7 @@ const BodyDelivery = ({ loja, quantity, user, document }) => {
       
         const newItem = [
           { "label": "ID", "value": newId.toString() },
-          { "label": "Loja", "value": loja.nomeLoja },
+          { "label": "Artista", "value": loja.nomeLoja },
           { "label": "Quantidade", "value": quantity },
           { "label": "Email", "value": user.email },
           { "label": "Data", "value": data },
@@ -112,7 +112,7 @@ const BodyDelivery = ({ loja, quantity, user, document }) => {
         const data = `${date.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })} ${time.toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`; // Convert date and time to BRT
         if (opcaoEntrega === 'Entregar na minha casa') {
             navigation.navigate('Delivery', { loja, opcaoEntrega, endereco, quantity, user, data, document });
-        } else if (opcaoEntrega === 'Irei buscar a impressão') {
+        } else if (opcaoEntrega === 'Irei buscar a arte') {
             await addData(loja, opcaoEntrega, endereco, user, data, document, quantity);
             navigation.navigate('Home', { user });
         }
@@ -137,27 +137,7 @@ const BodyDelivery = ({ loja, quantity, user, document }) => {
                     ))}
                 </Picker>
             </View>
-            {opcaoAgendamento === 'Agendar impressão' && (
-                <View style={styles.dateContainer}>
-                    <TouchableOpacity onPress={showDatePicker}>
-                        <Text style={styles.datePickerButton}>{dateSelected ? "Alterar Data e Hora" : "Selecionar Data e Hora"}</Text>
-                    </TouchableOpacity>
-                    {show && (
-                        <DateTimePicker
-                            value={date}
-                            minimumDate={new Date()}
-                            display="default"
-                            mode={mode}
-                            onChange={onChange}
-                        />
-                    )}
-                    {dateSelected && (
-                        <View style={styles.dateShowerContainer}>
-                            <Text style={styles.dateText}>Data e Hora: {formatDate(date, time)}</Text>
-                        </View>
-                    )}
-                </View>
-            )}
+            
             <View style={styles.pickerContainer}>
                 <Text style={styles.pickerLabel}>Tipo de entrega</Text>
                 <Picker
