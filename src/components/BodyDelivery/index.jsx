@@ -18,7 +18,7 @@ const BodyDelivery = ({ loja, quantity, user, document }) => {
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
     const [dateSelected, setDateSelected] = useState(false);
-    const [opcaoEntrega, setOpcaoEntrega] = useState('');
+    const [opcaoEntrega, setOpcaoEntrega] = useState('Irei buscar a impressão');
     const [endereco, setEndereco] = useState('');
     const navigation = useNavigation();
     const [jsonData, setJsonData] = useState([]); 
@@ -122,6 +122,10 @@ const BodyDelivery = ({ loja, quantity, user, document }) => {
         return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${time.getHours()}:${time.getMinutes()}`;
     };
 
+    const handleConfirmAddress = () => {
+        Alert.alert('Endereço salvo', 'Seu endereço foi salvo com sucesso.');
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.titleLabel}> Por favor, insira os detalhes da sua entrega.</Text>
@@ -178,7 +182,7 @@ const BodyDelivery = ({ loja, quantity, user, document }) => {
                         value={endereco}
                         onChangeText={setEndereco} 
                     />
-                    <Button title="Confirmar" />
+                    <Button title="Confirmar" onPress={handleConfirmAddress} />
                 </View>
             )}
             <View style={styles.buttonNext}>

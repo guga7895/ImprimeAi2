@@ -10,17 +10,18 @@ const BodyHome = ({ user }) => {
   const [filteredStores, setFilteredStores] = useState([]);
 
   const navigation = useNavigation();
-
+  
   useEffect(() => {
     const fetchLojas = async () => {
       try {
         const fileUri = FileSystem.documentDirectory + 'lojas.json';
         const fileExists = await FileSystem.getInfoAsync(fileUri);
-
+  
         if (fileExists.exists) {
           const fileContent = await FileSystem.readAsStringAsync(fileUri);
           const data = JSON.parse(fileContent);
           setLojas(data);
+          setFilteredStores(data); 
         } else {
           console.error('File not found:', fileUri);
         }
@@ -28,7 +29,7 @@ const BodyHome = ({ user }) => {
         console.error('Error fetching lojas:', error);
       }
     };
-
+  
     fetchLojas();
   }, []);
 
@@ -44,6 +45,7 @@ const BodyHome = ({ user }) => {
   };
 
   return (
+    
     <SafeAreaView style={styles.container}>
       {user && <Text>Seja bem vindo, {user.name}!!</Text>}
       <Text style={styles.title}>Pesquise papelarias próximas a você</Text>
@@ -86,6 +88,11 @@ const BodyHome = ({ user }) => {
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -95,7 +102,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: '50%',
-    marginBottom: 16,
+    marginBottom: 0,
+    marginTop: 16,
   },
   subtitle: {
     marginTop: 48,

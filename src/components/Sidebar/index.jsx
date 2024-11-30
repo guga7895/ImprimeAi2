@@ -33,7 +33,7 @@ const Sidebar = ({ closeSidebar }) => {
 const styles = StyleSheet.create({
   sidebar: {
     position: 'absolute',
-    top: 25,
+    top: 24,
     left: 0,
     width: '40%',
     height: '100%',
